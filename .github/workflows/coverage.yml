@@ -1,0 +1,30 @@
+name: Test Coverage
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run tests with JaCoCo coverage
+        run: |
+          mvn clean test jacoco:report
+
+      - name: Upload coverage to CodeAnt AI
+        uses: CodeAnt-AI/codeant-coverage-action@v0.0.1
+        with:
+          access_token: ${{ secrets.GB_TOKEN }}
+          coverage_file: target/site/jacoco/jacoco.xml

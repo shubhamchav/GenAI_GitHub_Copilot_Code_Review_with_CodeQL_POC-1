@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movieworld-service
+  labels:
+    app: movieworld-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movieworld-service
+  template:
+    metadata:
+      labels:
+        app: movieworld-service
+    spec:
+      containers:
+      - name: movieworld-service
+        image: 543816070942.dkr.ecr.us-east-1.amazonaws.com/finastra_group_2_movieworld-service:REPLACE_WITH_TAG
+        ports:
+        - containerPort: 8080

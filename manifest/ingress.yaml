@@ -1,0 +1,91 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: movieapp-ingress-movies
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /api/movies/$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /movies/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: movieworld-service
+                port:
+                  number: 8080
+          - path: /movies
+            pathType: Exact
+            backend:
+              service:
+                name: movieworld-service
+                port:
+                  number: 8080
+          - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: movieworld-service
+                port:
+                  number: 8080
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: movieapp-ingress-reviews
+#   namespace: default
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /api/reviews/$2
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - http:
+#         paths:
+#           - path: /reviews(/|$)(.*)
+#             pathType: ImplementationSpecific
+#             backend:
+#               service:
+#                 name: moviereview-service
+#                 port:
+#                   number: 8081
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: movieapp-ingress
+#   namespace: default
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: api/movies/$1
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - http:
+#         paths:
+
+#           # ========== MOVIEWORLD SERVICE ==========
+#           - path: /movies
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: movieworld-service
+#                 port:
+#                   number: 8080
+
+#           # ...existing code...
