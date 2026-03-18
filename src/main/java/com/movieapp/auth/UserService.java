@@ -13,6 +13,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    // Hardcoded secret for PoC (do NOT use in production)
+    private static final String HARDCODED_SECRET = "SuperSecretPassword123!";
+
     public User registerUser(String username, String password) {
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username already exists");
